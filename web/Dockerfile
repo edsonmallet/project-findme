@@ -4,7 +4,7 @@ ENV PORT 3000
 
 # Create app directory
 RUN mkdir -p /usr/src/web
-WORKDIR /usr/src/app
+WORKDIR /usr/src/web
 
 # Installing dependencies
 COPY package*.json /usr/src/web/

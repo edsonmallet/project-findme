@@ -1,5 +1,5 @@
 {
-  "name": "project_edsonmallet",
+  "name": "findme",
   "scripts": {
     "start": "docker-compose up"
   }
