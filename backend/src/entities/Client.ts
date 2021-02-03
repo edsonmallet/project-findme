@@ -9,9 +9,6 @@ export class Client {
     @Column()
     public name: string;
 
-    @Column()
-    public password: string;
-
     @OneToOne(() => ServiceOrder)
     public services_orders: ServiceOrder
 

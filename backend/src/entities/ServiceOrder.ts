@@ -8,9 +8,6 @@ export class ServiceOrder {
     public readonly id: string;
 
     @Column()
-    public name: string;
-
-    @Column()
     public problem: string;
 
     @Column()
@@ -19,7 +16,6 @@ export class ServiceOrder {
     @OneToOne(() => Client)
     @JoinColumn({ name: 'client_id' })
     public client: Client
-
 
     @Column()
     public user_id: string;
