@@ -9,40 +9,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.Client = void 0;
 const typeorm_1 = require("typeorm");
 const ServiceOrder_1 = require("./ServiceOrder");
-let User = class User {
+let Client = class Client {
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn('uuid'),
     __metadata("design:type", String)
-], User.prototype, "id", void 0);
+], Client.prototype, "id", void 0);
 __decorate([
     typeorm_1.Column(),
     __metadata("design:type", String)
-], User.prototype, "name", void 0);
-__decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", String)
-], User.prototype, "email", void 0);
-__decorate([
-    typeorm_1.Column(),
-    __metadata("design:type", String)
-], User.prototype, "password", void 0);
+], Client.prototype, "name", void 0);
 __decorate([
     typeorm_1.OneToOne(() => ServiceOrder_1.ServiceOrder),
     __metadata("design:type", ServiceOrder_1.ServiceOrder)
-], User.prototype, "services_orders", void 0);
+], Client.prototype, "services_orders", void 0);
 __decorate([
     typeorm_1.CreateDateColumn(),
     __metadata("design:type", Date)
-], User.prototype, "created_at", void 0);
+], Client.prototype, "created_at", void 0);
 __decorate([
     typeorm_1.UpdateDateColumn(),
     __metadata("design:type", Date)
-], User.prototype, "update_at", void 0);
-User = __decorate([
-    typeorm_1.Entity('users')
-], User);
-exports.User = User;
+], Client.prototype, "update_at", void 0);
+Client = __decorate([
+    typeorm_1.Entity('clients')
+], Client);
+exports.Client = Client;
