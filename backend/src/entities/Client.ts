@@ -1,16 +1,13 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne } from 'typeorm'
-import { ServiceOrder } from './ServiceOrder';
- 
-@Entity('users')
-export class User {
+import {ServiceOrder} from './ServiceOrder';
+
+@Entity('clients')
+export class Client {
     @PrimaryGeneratedColumn('uuid')
     public readonly id: string;
 
     @Column()
     public name: string;
-
-    @Column()
-    public email: string;
 
     @Column()
     public password: string;

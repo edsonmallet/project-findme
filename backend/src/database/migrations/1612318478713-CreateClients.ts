@@ -11,12 +11,24 @@ export default class CreateClients1612318478713 implements MigrationInterface {
               name: 'id',
               type: 'uuid',
               isPrimary: true,
-              generationStrategy: 'uuid'
+              generationStrategy: 'uuid',
+              default: 'gen_random_uuid()'
             },
             {
               name: 'name',
               type: 'varchar',
               isNullable: false
+            },
+            {
+              name: 'created_at',
+              type: 'timestamp',
+              isNullable: false,
+              default: 'now()'
+            },
+            {
+              name: 'update_at',
+              type: 'timestamp',
+              default: 'now()'
             }
           ]
         })

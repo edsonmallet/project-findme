@@ -36,10 +36,6 @@ services:
     volumes:
       - ./backend:/usr/src/api
       - "/usr/src/api/node_modules"
-    environment:
-      API_SECRET: "segredoaleatorio"
-      MAIL_HOST: "smtp.postmarkapp.com"
-      MAIL_PORT: "2525"
     ports:
       - "3333:3333"
     working_dir: /usr/src/api

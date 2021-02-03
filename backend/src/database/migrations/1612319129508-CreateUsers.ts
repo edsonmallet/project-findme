@@ -11,7 +11,8 @@ export class CreateUsers1612319129508 implements MigrationInterface {
               name: 'id',
               type: 'uuid',
               isPrimary: true,
-              generationStrategy: 'uuid'
+              generationStrategy: 'uuid',
+              default: 'gen_random_uuid()'
             },
             {
               name: 'name',
@@ -27,6 +28,17 @@ export class CreateUsers1612319129508 implements MigrationInterface {
               name: 'password',
               type: 'varchar',
               isNullable: false
+            },
+            {
+              name: 'created_at',
+              type: 'timestamp',
+              isNullable: false,
+              default: 'now()'
+            },
+            {
+              name: 'update_at',
+              type: 'timestamp',
+              default: 'now()'
             }
           ]
         })

@@ -11,7 +11,8 @@ export class CreateServicesOrders1612319348029 implements MigrationInterface {
               name: 'id',
               type: 'uuid',
               isPrimary: true,
-              generationStrategy: 'uuid'
+              generationStrategy: 'uuid',
+              default: 'gen_random_uuid()'
             },
             {
               name: 'problem',
@@ -21,12 +22,12 @@ export class CreateServicesOrders1612319348029 implements MigrationInterface {
             {
               name: 'client_id',
               type: 'uuid',
-              isNullable: false
+              isNullable: true
             },
             {
               name: 'user_id',
               type: 'uuid',
-              isNullable: false
+              isNullable: true
             },
             {
               name: 'latlng',
@@ -36,7 +37,13 @@ export class CreateServicesOrders1612319348029 implements MigrationInterface {
             {
               name: 'created_at',
               type: 'timestamp with time zone',
-              isNullable: false
+              isNullable: false,
+              default: 'now()'
+            },
+            {
+              name: 'update_at',
+              type: 'timestamp',
+              default: 'now()'
             }
           ]
         })
@@ -44,18 +51,23 @@ export class CreateServicesOrders1612319348029 implements MigrationInterface {
 
       await queryRunner.createForeignKey('services_orders',
         new TableForeignKey({
+            name: 'ServiceOrderClient',
             columnNames: ['client_id'],
             referencedTableName: 'clients',
             referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
         }),
       )
 
       await queryRunner.createForeignKey('services_orders',
         new TableForeignKey({
+            name: 'ServiceOrderUser',
             columnNames: ['user_id'],
             referencedTableName: 'users',
-            referencedColumnNames: ['id']
+            referencedColumnNames: ['id'],
+            onDelete: 'SET NULL',
+            onUpdate: 'CASCADE',
         }),
       )
 

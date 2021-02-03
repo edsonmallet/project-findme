@@ -2,5 +2,9 @@
   "name": "findme",
   "scripts": {
     "start": "docker-compose up"
+  },
+  "dependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "bcryptjs": "^2.4.3"
   }
 }
