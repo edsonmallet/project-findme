@@ -11,7 +11,9 @@ import { ServerStyleSheet as StyledComponentSheets } from 'styled-components'
 import { ServerStyleSheets as MaterialUiServerStyleSheets } from '@material-ui/core/styles'
 
 export default class MyDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
+  static async getInitialProps(
+    ctx: DocumentContext
+  ): Promise<DocumentInitialProps> {
     const styledComponentSheet = new StyledComponentSheets()
     const materialUiSheets = new MaterialUiServerStyleSheets()
     const originalRenderPage = ctx.renderPage
@@ -45,8 +47,15 @@ export default class MyDocument extends Document {
       <Html lang="pt">
         <Head>
           <meta charSet="utf-8" />
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-          <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+          <title>PredialX</title>
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+          />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          />
         </Head>
         <body>
           <Main />

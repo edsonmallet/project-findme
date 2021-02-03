@@ -1,15 +1,17 @@
 import React from 'react'
 import { AppBar, CssBaseline, Toolbar, Typography } from '@material-ui/core'
+import Menu from '../Menu'
 
 const Nav: React.FC = () => {
   return (
     <>
-    <CssBaseline />
-    <AppBar position="fixed">
-        <Toolbar>
+      <CssBaseline />
+      <AppBar position="static">
+        <Toolbar variant="dense">
           <Typography variant="h6" noWrap>
-            Project X
+            PredialX
           </Typography>
+          <Menu />
         </Toolbar>
       </AppBar>
     </>

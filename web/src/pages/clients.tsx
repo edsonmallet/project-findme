@@ -2,12 +2,12 @@ import React from 'react'
 
 import Typography from '@material-ui/core/Typography'
 
-const Home: React.FC = () => {
+const Clients: React.FC = () => {
   return (
     <>
-      <Typography>Home</Typography>
+      <Typography>Clients</Typography>
     </>
   )
 }
 
-export default Home
+export default Clients

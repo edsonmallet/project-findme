@@ -1,9 +1,11 @@
 const theme = {
   colors: {
     background: '#fff',
-    text: '#e1e1e6',
+    text: '#999',
     primary: '#fff'
-  }
+  },
+  margin: 16,
+  padding: 16
 }
 
 export default theme
