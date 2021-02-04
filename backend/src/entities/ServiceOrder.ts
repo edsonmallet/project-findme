@@ -27,6 +27,9 @@ export class ServiceOrder {
     @Column()
     public latlng: string;
 
+    @Column()
+    public status: string
+
     @CreateDateColumn()
     public created_at: Date
 

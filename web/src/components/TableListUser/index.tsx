@@ -9,6 +9,7 @@ import axios from 'axios'
 import { api } from '../../lib/api'
 
 import Notiflix from 'notiflix'
+import { convertDate } from '../../lib/functions'
 
 const columns: ColDef[] = [
   { field: 'id', headerName: '#ID', flex: 2 },
@@ -67,8 +68,8 @@ const TableListUser: React.FC<TableListUserProps> = (
     id: item.id,
     name: item.name,
     email: item.email,
-    created_at: item.created_at,
-    updated_at: item.update_at
+    created_at: convertDate(item.created_at),
+    updated_at: convertDate(item.update_at)
   }))
 
   return (

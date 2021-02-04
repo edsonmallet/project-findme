@@ -35,6 +35,11 @@ export class CreateServicesOrders1612319348029 implements MigrationInterface {
               isNullable: true
             },
             {
+              name: 'status',
+              type: 'string',
+              isNullable: true
+            },
+            {
               name: 'created_at',
               type: 'timestamp with time zone',
               isNullable: false,

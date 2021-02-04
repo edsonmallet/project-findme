@@ -4,7 +4,9 @@ import { IServiceOrder } from '../../lib/interfaces'
 
 import { DataGrid, ColDef, CellParams } from '@material-ui/data-grid'
 import {
+  Avatar,
   Button,
+  Chip,
   createStyles,
   makeStyles,
   Paper,
@@ -15,6 +17,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import GpsFixedIcon from '@material-ui/icons/GpsFixed'
 import axios from 'axios'
 import { api } from '../../lib/api'
+import { convertDate } from '../../lib/functions'
 
 import Notiflix from 'notiflix'
 
@@ -41,6 +44,27 @@ const TableListSo: React.FC<TableListSoProps> = (props: TableListSoProps) => {
     { field: 'problem', headerName: 'Problema', flex: 4 },
     { field: 'created_at', headerName: 'Criado em', flex: 2 },
     { field: 'updated_at', headerName: 'Ultimo Update', flex: 2 },
+    {
+      field: 'status',
+      headerName: 'Status',
+      flex: 2, // eslint-disable-next-line react/display-name
+      renderCell: (params: CellParams) => {
+        return (
+          <>
+            {params.row.status === null && (
+              <Chip
+                size="small"
+                avatar={<Avatar>{params.row.status ? 'P' : 'N'}</Avatar>}
+                label={params.row.status ? params.row.status : 'Sem Status'}
+                color={
+                  params.row.status === 'pending' ? 'primary' : 'secondary'
+                }
+              />
+            )}
+          </>
+        )
+      }
+    },
     {
       field: 'actions',
       headerName: 'Ações',
@@ -96,8 +120,9 @@ const TableListSo: React.FC<TableListSoProps> = (props: TableListSoProps) => {
     client: item.client.name,
     user: item.user.name,
     problem: item.problem,
-    created_at: item.created_at,
-    updated_at: item.update_at
+    status: item.status,
+    created_at: convertDate(item.created_at),
+    updated_at: convertDate(item.update_at)
   }))
 
   return (

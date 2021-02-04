@@ -9,6 +9,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import Notiflix from 'notiflix'
 import axios from 'axios'
 import { api } from '../../lib/api'
+import { convertDate } from '../../lib/functions'
 
 interface TableListClientProps {
   rows: Array<IClient>
@@ -64,8 +65,8 @@ const TableListClient: React.FC<TableListClientProps> = (
   const rows = props.rows.map(item => ({
     id: item.id,
     name: item.name,
-    created_at: item.created_at,
-    updated_at: item.update_at
+    created_at: convertDate(item.created_at),
+    updated_at: convertDate(item.update_at)
   }))
 
   return (
