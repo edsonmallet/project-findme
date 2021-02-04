@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 import { AppProps } from 'next/app'
+import Head from 'next/head'
 
 import GlobalStyles from '../styles/global'
 import { ThemeProvider } from 'styled-components'
 import theme from '../styles/theme'
 
 import Nav from '../components/Nav'
-import { createStyles, Grid, makeStyles, Paper, Theme } from '@material-ui/core'
+import { createStyles, Grid, makeStyles, Theme } from '@material-ui/core'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -15,16 +16,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     grid: {
       padding: theme.spacing(2)
-    },
-    paper: {
-      padding: theme.spacing(2),
-      textAlign: 'left',
-      color: theme.palette.text.secondary
     }
   })
 )
 
-const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
+const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
   const classes = useStyles()
 
   useEffect(() => {
@@ -35,12 +31,13 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   })
   return (
     <React.Fragment>
+      <Head>
+        <title>PredialX</title>
+      </Head>
       <ThemeProvider theme={theme}>
         <Nav />
         <Grid item xs={12} className={classes.grid}>
-          <Paper className={classes.paper}>
-            <Component {...pageProps} />
-          </Paper>
+          <Component {...pageProps} />
         </Grid>
         <GlobalStyles />
       </ThemeProvider>
