@@ -9,14 +9,14 @@ import {
 } from '@material-ui/core'
 
 import AddIcon from '@material-ui/icons/Add'
-import TableListClient from '../components/TableListClient'
-import { api, fetcher } from '../lib/api'
+
+import { IUser } from '../../lib/interfaces'
 
 import useSwr from 'swr'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
-
-import Backdrop from '@material-ui/core/Backdrop'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import { api, fetcher } from '../../lib/api'
+import TableListUser from '../../components/TableListUser'
+import Link from 'next/link'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,40 +35,36 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-const Client: React.FC = ({
-  clients
+const Users: React.FC = ({
+  users
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const classes = useStyles()
-  const [open, setOpen] = React.useState(false)
 
-  const handleToggle = () => {
-    setOpen(!open)
-  }
-
-  const { data, error } = useSwr(`${api.BASE_URL}/clients`, fetcher, {
-    initialData: clients
+  const { data, error } = useSwr<Array<IUser>>(api.users, fetcher, {
+    initialData: users
   })
 
   if (error) return <div>Failed to load users</div>
-  if (!data) return handleToggle()
-
-  console.log(data)
+  if (!data) return <div>Carregando...</div>
 
   return (
     <>
-      <Backdrop className={classes.backdrop} open={open}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
       <Typography component="h1" variant="h6">
-        Clientes
-        <Fab className={classes.fab} color="secondary">
-          <AddIcon />
-        </Fab>
+        Usuários
       </Typography>
+
+      <Link href="/users/add">
+        <a>
+          <Fab className={classes.fab} color="secondary">
+            <AddIcon />
+          </Fab>
+        </a>
+      </Link>
+
       {data.length === 0 && <Typography>Nenhum cliente cadastrado</Typography>}
       {data.length > 0 && (
         <div className={classes.table}>
-          <TableListClient rows={data} />
+          <TableListUser rows={data} />
         </div>
       )}
     </>
@@ -76,8 +72,8 @@ const Client: React.FC = ({
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const clients = await fetcher(`${api.BASE_URL}/clients`)
-  return { props: { clients } }
+  const users = await fetcher(api.users)
+  return { props: { users } }
 }
 
-export default Client
+export default Users

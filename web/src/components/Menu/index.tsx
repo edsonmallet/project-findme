@@ -1,24 +1,35 @@
 import React from 'react'
 import Link from 'next/link'
-import { Button } from '@material-ui/core'
+import { createStyles, makeStyles, Theme } from '@material-ui/core'
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    link: {
+      color: '#fff',
+      textDecoration: 'none',
+      paddingLeft: 10,
+      paddingRight: 10,
+      transition: 'all 0.5s',
+      '&:hover': {
+        color: 'red'
+      }
+    }
+  })
+)
 
 const Menu: React.FC = () => {
+  const classes = useStyles()
+
   return (
     <div style={{ marginLeft: 20 }}>
       <Link href="/users">
-        <Button color="secondary" disableElevation>
-          Usuários
-        </Button>
+        <a className={classes.link}>Usuários</a>
       </Link>
       <Link href="/clients">
-        <Button color="secondary" disableElevation>
-          Clientes
-        </Button>
+        <a className={classes.link}>Clientes</a>
       </Link>
       <Link href="/services">
-        <Button color="secondary" disableElevation>
-          O.S's
-        </Button>
+        <a className={classes.link}>OS`s</a>
       </Link>
     </div>
   )

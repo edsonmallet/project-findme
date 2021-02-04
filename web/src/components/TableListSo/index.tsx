@@ -1,29 +1,29 @@
 import React from 'react'
 
-import { IUser } from '../../lib/interfaces'
+import { IServiceOrder } from '../../lib/interfaces'
 
 import { DataGrid, ColDef } from '@material-ui/data-grid'
 import { Paper } from '@material-ui/core'
 
 const columns: ColDef[] = [
   { field: 'id', headerName: '#ID', flex: 2 },
-  { field: 'name', headerName: 'Nome', flex: 2 },
-  { field: 'email', headerName: 'Email', flex: 2 },
+  { field: 'client', headerName: 'Cliente', flex: 1 },
+  { field: 'user', headerName: 'Usuário', flex: 1 },
+  { field: 'problem', headerName: 'Problema', flex: 4 },
   { field: 'created_at', headerName: 'Criado em', flex: 1 },
   { field: 'updated_at', headerName: 'Ultimo Update', flex: 1 }
 ]
 
-interface TableListUserProps {
-  rows: Array<IUser>
+interface TableListSoProps {
+  rows: Array<IServiceOrder>
 }
 
-const TableListUser: React.FC<TableListUserProps> = (
-  props: TableListUserProps
-) => {
+const TableListSo: React.FC<TableListSoProps> = (props: TableListSoProps) => {
   const rows = props.rows.map(item => ({
     id: item.id,
-    name: item.name,
-    email: item.email,
+    client: item.client.name,
+    user: item.user.name,
+    problem: item.problem,
     created_at: item.created_at,
     updated_at: item.update_at
   }))
@@ -35,4 +35,4 @@ const TableListUser: React.FC<TableListUserProps> = (
   )
 }
 
-export default TableListUser
+export default TableListSo

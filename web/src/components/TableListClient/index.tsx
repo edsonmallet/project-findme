@@ -1,61 +1,35 @@
 import React from 'react'
 
-import { makeStyles } from '@material-ui/core/styles'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
-import Paper from '@material-ui/core/Paper'
+import { IClient } from '../../lib/interfaces'
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650
-  }
-})
+import { DataGrid, ColDef } from '@material-ui/data-grid'
+import { Paper } from '@material-ui/core'
 
-interface Client {
-  created_at: string
-  id: string
-  name: string
-  update_at: string
-}
+const columns: ColDef[] = [
+  { field: 'id', headerName: '#ID', flex: 2 },
+  { field: 'name', headerName: 'Cliente', flex: 2 },
+  { field: 'created_at', headerName: 'Criado em', flex: 1 },
+  { field: 'updated_at', headerName: 'Ultimo Update', flex: 1 }
+]
 
 interface TableListClientProps {
-  rows: Array<Client>
+  rows: Array<IClient>
 }
 
 const TableListClient: React.FC<TableListClientProps> = (
   props: TableListClientProps
 ) => {
-  const classes = useStyles()
+  const rows = props.rows.map(item => ({
+    id: item.id,
+    name: item.name,
+    created_at: item.created_at,
+    updated_at: item.update_at
+  }))
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Nome</TableCell>
-            <TableCell align="center">Criado em</TableCell>
-            <TableCell align="center">Ultima atualizaçãp</TableCell>
-            <TableCell align="center">Ações</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {props.rows.map(row => (
-            <TableRow key={row.id}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="center">{row.created_at}</TableCell>
-              <TableCell align="center">{row.update_at}</TableCell>
-              <TableCell align="center"></TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Paper style={{ minHeight: 500, width: '100%' }}>
+      <DataGrid rows={rows} columns={columns} pageSize={5} showToolbar />
+    </Paper>
   )
 }
 

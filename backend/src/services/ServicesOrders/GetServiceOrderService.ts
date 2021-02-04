@@ -5,8 +5,11 @@ class GetAllServiceOrderService {
   public async execute(id?: string): Promise<ServiceOrder[]> {
     const ServiceOrdersRepository = getRepository(ServiceOrder)
 
-    const serviceOrder = await ServiceOrdersRepository.find(id ? { id } : null)
-
+    const serviceOrder = await ServiceOrdersRepository.find({ 
+      where: id ? { id } : {},
+      relations: ['client', 'user'],
+    })
+    
     return serviceOrder
   }
 }

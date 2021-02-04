@@ -12,6 +12,7 @@ serviceOrdersRoutes.get('/', async (request, response)=>{
     const serviceOrders = await getAllServiceOrders.execute()
     
     return response.json(serviceOrders)
+    
   } catch (error) {
     return response.status(400).json({ error: error.message})
   }

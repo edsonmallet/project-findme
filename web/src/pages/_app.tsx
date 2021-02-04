@@ -4,10 +4,11 @@ import Head from 'next/head'
 
 import GlobalStyles from '../styles/global'
 import { ThemeProvider } from 'styled-components'
-import theme from '../styles/theme'
 
 import Nav from '../components/Nav'
 import { createStyles, Grid, makeStyles, Theme } from '@material-ui/core'
+import theme from '../styles/theme'
+import Notiflix from 'notiflix'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -28,20 +29,27 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles)
     }
-  })
+
+    Notiflix.Notify.Init({
+      position: 'center-bottom',
+      distance: '20px',
+      useGoogleFont: true,
+      fontFamily: 'Roboto'
+    })
+  }, [])
   return (
-    <React.Fragment>
+    <>
       <Head>
         <title>PredialX</title>
       </Head>
       <ThemeProvider theme={theme}>
+        <GlobalStyles />
         <Nav />
         <Grid item xs={12} className={classes.grid}>
           <Component {...pageProps} />
         </Grid>
-        <GlobalStyles />
       </ThemeProvider>
-    </React.Fragment>
+    </>
   )
 }
 
