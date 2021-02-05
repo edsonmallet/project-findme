@@ -1,10 +1,8 @@
-import { StyleSheet } from "react-native";
-import metrics from '../../../styles/metrics'
+import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
-  container: {
-    margin: metrics.margin,
-    marginTop: 0
+  list:{
+    marginBottom: 48
   }
 })
 

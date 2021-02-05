@@ -1,5 +1,5 @@
 
-const BASE_URL = 'http://localhost:3333';
+const BASE_URL = 'https://findmeapitest.herokuapp.com';
 
 export const api = {
   clients: `${BASE_URL}/clients`,

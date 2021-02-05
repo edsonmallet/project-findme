@@ -1,15 +1,13 @@
 import React from 'react'
 import { Text, View } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
 import styles from './styles'
+import { IServiceOrder } from '../../../lib/interfaces'
 
-const DetailsService: React.FC = () => {
-  const navigation = useNavigation()
-
+const DetailsService: React.FC<IServiceOrder> = (props: IServiceOrder) => {
   return (
     <>
       <View style={styles.container}>
-        <Text>Details</Text>
+        <Text>{props.problem}</Text>
       </View>
     </>
   )

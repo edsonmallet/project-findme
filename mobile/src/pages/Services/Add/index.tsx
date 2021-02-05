@@ -7,22 +7,29 @@ import axios from 'axios'
 import styles from './styles'
 import { IClient } from '../../../lib/interfaces'
 import Toast from 'react-native-toast-message'
+import { useNavigation } from '@react-navigation/native'
+import Spinner from 'react-native-loading-spinner-overlay'
 
 const AddService: React.FC = () => {
+  const navigation = useNavigation()
   const [region, setRegion] = useState({
     latitude: 0,
     longitude: 0,
     latitudeDelta: 0.0042,
     longitudeDelta: 0.0031
   })
+  const [spinner, setSpinner] = useState<boolean>(false)
 
   const [clients, setClients] = useState<Array<IClient>>([])
 
   const getAllClients = async (): Promise<void> => {
+    setSpinner(true)
     try {
       const clients = await axios.get(api.clients)
       setClients(clients.data)
+      setSpinner(false)
     } catch (error) {
+      setSpinner(false)
       Toast.show({
         type: 'error',
         position: 'bottom',
@@ -35,7 +42,44 @@ const AddService: React.FC = () => {
     }
   }
 
-  const [selectedValue, setSelectedValue] = useState<string>('')
+  const handleSubmit = async (): Promise<void> => {
+    setSpinner(true)
+    try {
+      const data = {
+        problem: problem,
+        client_id: selectedClient,
+        user_id: '9a3aae77-bce5-4330-9a9b-cf573a96522f',
+        status: 'pending',
+        latlng: JSON.stringify(region)
+      }
+      await axios.post(api.so, { ...data })
+      navigation.navigate('List')
+      setSpinner(false)
+      Toast.show({
+        type: 'success',
+        position: 'bottom',
+        text1: 'OS Registrada',
+        visibilityTime: 8000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40
+      })
+    } catch (error) {
+      setSpinner(false)
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: `${error.message}`,
+        visibilityTime: 8000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40
+      })
+    }
+  }
+
+  const [selectedClient, setSelectedClient] = useState<string>('')
+  const [problem, setProblem] = useState<string>('')
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -60,6 +104,11 @@ const AddService: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <Spinner
+        visible={spinner}
+        textContent={'Loading...'}
+        textStyle={{ color: '#fff' }}
+      />
       <View style={styles.containerMap}>
         <MapView
           style={styles.map}
@@ -81,25 +130,31 @@ const AddService: React.FC = () => {
       </View>
       <View style={styles.containerForm}>
         <Picker
-          selectedValue={selectedValue}
+          selectedValue={selectedClient}
           style={styles.pickerField}
-          onValueChange={itemValue => setSelectedValue(itemValue)}
+          onValueChange={itemValue => setSelectedClient(itemValue)}
         >
-          {clients &&
-            clients.map(client => (
-              <Picker.Item label={client.name} value={client.id} />
+          {clients.length > 0 &&
+            clients.map(item => (
+              <Picker.Item label={item.name} value={item.id} />
             ))}
         </Picker>
 
         <TextInput
           multiline={true}
           numberOfLines={6}
-          value=""
+          value={problem}
           placeholder="Digite aqui o problema"
           style={styles.textAreaField}
+          onChangeText={text => {
+            setProblem(text)
+          }}
         />
 
-        <TouchableOpacity style={styles.buttonFloatBottom}>
+        <TouchableOpacity
+          style={styles.buttonFloatBottom}
+          onPress={() => handleSubmit()}
+        >
           <Text style={styles.buttonFloatText}>SALVAR</Text>
         </TouchableOpacity>
       </View>

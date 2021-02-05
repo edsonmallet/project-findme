@@ -10,13 +10,10 @@ const Stack = createStackNavigator()
 const optionsHeader = {
   headerStyle: {
     backgroundColor: colors.primary,
-    borderWidth: 0,
-    elevation: 0,
-    shadowColor: 'transparent',
-    shadowOpacity: 0
+    borderWidth: 0
   },
   headerTitleStyle: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'normal',
     fontStyle: 'normal'
   },

@@ -1,15 +1,6 @@
 export default {
-  primary: '#4E6DBD',
-  primaryVariant: '#385399',
-  secondary: '#20D0CE',
-  secondaryVariant: '#009694',
-  secondaryLight: '#1FEEEC',
-
-  alert: '#FFB156',
-  alertVariant: '#DB8622',
-
-  error: '#FF5956',
-  errorVariant: '#CA2926',
+  primary: '#3f51b5',
+  secondary: '#f50057',
 
   black: '#000000',
   black5: '#0000000D',
