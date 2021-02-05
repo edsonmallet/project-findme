@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Text, TextInput, View } from 'react-native'
+import { Picker, Text, TextInput, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import MapView, { Marker } from 'react-native-maps'
-import SelectClient from '../../../components/SelectClient'
+import { api } from '../../../lib/api'
+import axios from 'axios'
 import styles from './styles'
+import { IClient } from '../../../lib/interfaces'
+import Toast from 'react-native-toast-message'
 
 const AddService: React.FC = () => {
   const [region, setRegion] = useState({
@@ -13,9 +16,29 @@ const AddService: React.FC = () => {
     longitudeDelta: 0.0031
   })
 
+  const [clients, setClients] = useState<Array<IClient>>([])
+
+  const getAllClients = async (): Promise<void> => {
+    try {
+      const clients = await axios.get(api.clients)
+      setClients(clients.data)
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: `${error.message}`,
+        visibilityTime: 8000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40
+      })
+    }
+  }
+
+  const [selectedValue, setSelectedValue] = useState<string>('')
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
-      // success
       async ({
         coords: { latitude, longitude }
       }: GeolocationPosition): Promise<void> =>
@@ -25,7 +48,6 @@ const AddService: React.FC = () => {
           latitudeDelta: 0.002,
           longitudeDelta: 0.002
         }),
-      // error
       () => {},
       {
         timeout: 2000,
@@ -33,7 +55,8 @@ const AddService: React.FC = () => {
         maximumAge: 1000
       }
     )
-  })
+    getAllClients()
+  }, [])
 
   return (
     <View style={styles.container}>
@@ -57,17 +80,27 @@ const AddService: React.FC = () => {
         </MapView>
       </View>
       <View style={styles.containerForm}>
-        <SelectClient />
+        <Picker
+          selectedValue={selectedValue}
+          style={styles.pickerField}
+          onValueChange={itemValue => setSelectedValue(itemValue)}
+        >
+          {clients &&
+            clients.map(client => (
+              <Picker.Item label={client.name} value={client.id} />
+            ))}
+        </Picker>
 
         <TextInput
           multiline={true}
-          numberOfLines={4}
+          numberOfLines={6}
           value=""
           placeholder="Digite aqui o problema"
+          style={styles.textAreaField}
         />
 
         <TouchableOpacity style={styles.buttonFloatBottom}>
-          <Text>SALVAR</Text>
+          <Text style={styles.buttonFloatText}>SALVAR</Text>
         </TouchableOpacity>
       </View>
     </View>

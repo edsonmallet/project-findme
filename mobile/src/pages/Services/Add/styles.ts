@@ -1,5 +1,6 @@
 import { Dimensions, StyleSheet } from "react-native";
 import colors from "../../../styles/colors";
+import fonts from "../../../styles/fonts";
 import metrics from '../../../styles/metrics'
 
 const styles = StyleSheet.create({
@@ -13,7 +14,7 @@ const styles = StyleSheet.create({
   containerForm: {
     position:'absolute',
     width: '90%',
-    bottom: 90,
+    top: 10,
     zIndex:9999,
     backgroundColor: "#fff",
     borderColor: colors.black20,
@@ -27,9 +28,31 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height,
   },
   buttonFloatBottom:{
-    padding: metrics.padding,
-    margin: metrics.margin,
-    backgroundColor: 'red',
+    elevation: 0,
+    backgroundColor: colors.primary,
+    borderRadius: metrics.borderRadius,
+    paddingVertical: metrics.padding,
+  },
+  buttonFloatText: {
+    fontSize: fonts.big,
+    color: colors.white,
+    fontWeight: "bold",
+    alignSelf: "center",
+    textTransform: "uppercase"
+  },
+  textAreaField:{
+    borderRadius: metrics.borderRadius,
+    borderColor: colors.black20,
+    borderWidth: 1,
+    marginVertical: 8,
+    paddingHorizontal: metrics.padding
+  },
+  pickerField:{
+    borderRadius: metrics.borderRadius,
+    borderColor: colors.black20,
+    borderWidth: 1,
+    marginVertical: 8,
+    paddingHorizontal: metrics.padding
   }
 })
 
