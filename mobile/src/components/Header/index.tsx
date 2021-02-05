@@ -1,36 +1,26 @@
 import React, { memo } from 'react'
-import { StyleSheet } from 'react-native'
-import { Appbar, FAB } from 'react-native-paper'
+import { Appbar } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
-
-const styles = StyleSheet.create({
-  fab: {
-    position: 'absolute',
-    margin: 16,
-    right: 0,
-    bottom: 0
-  }
-})
+import { View } from 'react-native'
+import styles from '../../pages/Services/Add/styles'
 
 interface HeaderProps {
   subtitle: string
+  buttonBack?: boolean
 }
 
 const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
   const navigation = useNavigation()
 
   return (
-    <>
+    <View>
       <Appbar.Header focusable>
         <Appbar.Content title="PredialX" subtitle={props.subtitle} focusable />
+        {props.buttonBack && (
+          <Appbar.BackAction onPress={() => navigation.goBack()} />
+        )}
       </Appbar.Header>
-      <FAB
-        focusable
-        style={styles.fab}
-        icon="plus"
-        onPress={() => navigation.navigate('Add')}
-      />
-    </>
+    </View>
   )
 }
 
