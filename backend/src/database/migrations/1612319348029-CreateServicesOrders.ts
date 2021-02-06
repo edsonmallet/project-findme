@@ -22,12 +22,14 @@ export class CreateServicesOrders1612319348029 implements MigrationInterface {
             {
               name: 'client_id',
               type: 'uuid',
-              isNullable: true
+              isNullable: true,
+              isUnique:false
             },
             {
               name: 'user_id',
               type: 'uuid',
-              isNullable: true
+              isNullable: true,
+              isUnique:false
             },
             {
               name: 'latlng',
