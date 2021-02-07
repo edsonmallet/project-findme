@@ -2,6 +2,7 @@ import { compare } from "bcryptjs"
 import { getRepository } from "typeorm"
 import { User } from "../../entities/User"
 import { sign } from 'jsonwebtoken'
+import authConfig from "../../config/auth"
 
 interface Request{
   email: string;
@@ -14,7 +15,7 @@ interface Response {
 }
 
 class AuthenticateUserService {
-  public async execute({email, password}: Request): Promise<Response>{
+  public async execute({ email, password }: Request): Promise<Response>{
     const userRepositoriy = getRepository(User)
 
     const user = await userRepositoriy.findOne({where: { email }})
@@ -29,9 +30,11 @@ class AuthenticateUserService {
       throw new Error('Incorrect mail/password combination')
     }
 
-    const token = sign({}, process.env.HASH, {
+    const { secret, expiresIn } = authConfig.jwt
+
+    const token = sign({}, secret , {
       subject: user.id,
-      expiresIn: '1d'
+      expiresIn: expiresIn
     })
 
     return {

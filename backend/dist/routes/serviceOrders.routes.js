@@ -9,8 +9,10 @@ const CreateServiceOrderService_1 = __importDefault(require("../services/Service
 const GetServiceOrderService_1 = __importDefault(require("../services/ServicesOrders/GetServiceOrderService"));
 const UpdateServiceOrderService_1 = __importDefault(require("../services/ServicesOrders/UpdateServiceOrderService"));
 const DeleteServiceOrderService_1 = __importDefault(require("../services/ServicesOrders/DeleteServiceOrderService"));
+const ensureAuthentication_1 = __importDefault(require("../middlewares/ensureAuthentication"));
 const serviceOrdersRoutes = express_1.Router();
 exports.serviceOrdersRoutes = serviceOrdersRoutes;
+serviceOrdersRoutes.use(ensureAuthentication_1.default);
 serviceOrdersRoutes.get('/', async (request, response) => {
     try {
         const getAllServiceOrders = new GetServiceOrderService_1.default();

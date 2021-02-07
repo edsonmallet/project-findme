@@ -3,8 +3,11 @@ import CreateServiceOrderService from '../services/ServicesOrders/CreateServiceO
 import GetServiceOrderService from '../services/ServicesOrders/GetServiceOrderService'
 import UpdateServiceOrderService from '../services/ServicesOrders/UpdateServiceOrderService'
 import DeleteServiceOrderService from '../services/ServicesOrders/DeleteServiceOrderService'
+import ensureAuthentication from '../middlewares/ensureAuthentication'
 
 const serviceOrdersRoutes = Router()
+
+serviceOrdersRoutes.use(ensureAuthentication)
 
 serviceOrdersRoutes.get('/', async (request, response)=>{
   try {

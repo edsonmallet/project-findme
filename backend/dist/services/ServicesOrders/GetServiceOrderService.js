@@ -5,7 +5,10 @@ const ServiceOrder_1 = require("../../entities/ServiceOrder");
 class GetAllServiceOrderService {
     async execute(id) {
         const ServiceOrdersRepository = typeorm_1.getRepository(ServiceOrder_1.ServiceOrder);
-        const serviceOrder = await ServiceOrdersRepository.find(id ? { id } : null);
+        const serviceOrder = await ServiceOrdersRepository.find({
+            where: id ? { id } : {},
+            relations: ['client', 'user'],
+        });
         return serviceOrder;
     }
 }

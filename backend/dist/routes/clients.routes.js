@@ -9,8 +9,10 @@ const CreateClientService_1 = __importDefault(require("../services/Clients/Creat
 const GetClientService_1 = __importDefault(require("../services/Clients/GetClientService"));
 const UpdateClientService_1 = __importDefault(require("../services/Clients/UpdateClientService"));
 const DeleteClientService_1 = __importDefault(require("../services/Clients/DeleteClientService"));
+const ensureAuthentication_1 = __importDefault(require("../middlewares/ensureAuthentication"));
 const clientsRoutes = express_1.Router();
 exports.clientsRoutes = clientsRoutes;
+clientsRoutes.use(ensureAuthentication_1.default);
 clientsRoutes.get('/', async (request, response) => {
     try {
         const getAllClient = new GetClientService_1.default();

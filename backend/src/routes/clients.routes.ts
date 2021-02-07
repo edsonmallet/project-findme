@@ -3,8 +3,11 @@ import CreateClientService from '../services/Clients/CreateClientService'
 import GetClientService from '../services/Clients/GetClientService'
 import UpdateClientService from '../services/Clients/UpdateClientService'
 import DeleteClientService from '../services/Clients/DeleteClientService'
+import ensureAuthentication from '../middlewares/ensureAuthentication'
 
 const clientsRoutes = Router()
+
+clientsRoutes.use(ensureAuthentication)
 
 clientsRoutes.get('/', async (request, response)=>{
   try {

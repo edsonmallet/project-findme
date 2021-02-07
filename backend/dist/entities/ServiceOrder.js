@@ -46,6 +46,10 @@ __decorate([
     __metadata("design:type", String)
 ], ServiceOrder.prototype, "latlng", void 0);
 __decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", String)
+], ServiceOrder.prototype, "status", void 0);
+__decorate([
     typeorm_1.CreateDateColumn(),
     __metadata("design:type", Date)
 ], ServiceOrder.prototype, "created_at", void 0);

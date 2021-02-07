@@ -22,16 +22,23 @@ class CreateServicesOrders1612319348029 {
                 {
                     name: 'client_id',
                     type: 'uuid',
-                    isNullable: true
+                    isNullable: true,
+                    isUnique: false
                 },
                 {
                     name: 'user_id',
                     type: 'uuid',
-                    isNullable: true
+                    isNullable: true,
+                    isUnique: false
                 },
                 {
                     name: 'latlng',
                     type: 'json',
+                    isNullable: true
+                },
+                {
+                    name: 'status',
+                    type: 'string',
                     isNullable: true
                 },
                 {

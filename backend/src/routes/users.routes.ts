@@ -3,8 +3,11 @@ import CreateUserService from '../services/Users/CreateUserService'
 import GetUserService from '../services/Users/GetUserService'
 import UpdateUserService from '../services/Users/UpdateUserService'
 import DeleteUserService from '../services/Users/DeleteUserService'
+import ensureAuthentication from '../middlewares/ensureAuthentication'
 
 const usersRoutes = Router()
+
+usersRoutes.use(ensureAuthentication)
 
 usersRoutes.get('/', async (request, response)=>{
   try {
