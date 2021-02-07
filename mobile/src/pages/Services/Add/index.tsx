@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { Picker, Text, TextInput, View } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Picker, Text, TextInput, View, TouchableOpacity } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
-import { api } from '../../../lib/api'
-import axios from 'axios'
 import styles from './styles'
 import { IClient } from '../../../lib/interfaces'
 import Toast from 'react-native-toast-message'
 import { useNavigation } from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
+import api, { endpoints } from '../../../lib/api'
+import { useAuth } from '../../../context/auth'
 
 const AddService: React.FC = () => {
   const navigation = useNavigation()
+  const { user } = useAuth()
   const [region, setRegion] = useState({
     latitude: 0,
     longitude: 0,
@@ -25,7 +25,7 @@ const AddService: React.FC = () => {
   const getAllClients = async (): Promise<void> => {
     setSpinner(true)
     try {
-      const clients = await axios.get(api.clients)
+      const clients = await api.get(endpoints.clients)
       setClients(clients.data)
       setSpinner(false)
     } catch (error) {
@@ -48,11 +48,11 @@ const AddService: React.FC = () => {
       const data = {
         problem: problem,
         client_id: selectedClient,
-        user_id: '9a3aae77-bce5-4330-9a9b-cf573a96522f',
+        user_id: user?.id,
         status: 'pending',
         latlng: JSON.stringify(region)
       }
-      await axios.post(api.so, { ...data })
+      await api.post(endpoints.so, { ...data })
       navigation.navigate('List')
       setSpinner(false)
       Toast.show({

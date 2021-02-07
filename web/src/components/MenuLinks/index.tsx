@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-const Menu: React.FC = () => {
+const MenuLinks: React.FC = () => {
   const classes = useStyles()
 
   return (
@@ -35,4 +35,4 @@ const Menu: React.FC = () => {
   )
 }
 
-export default Menu
+export default MenuLinks

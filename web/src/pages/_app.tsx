@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
+import { Provider } from 'next-auth/client'
 
 import GlobalStyles from '../styles/global'
 import { ThemeProvider } from 'styled-components'
@@ -46,7 +47,9 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
         <GlobalStyles />
         <Nav />
         <Grid item xs={12} className={classes.grid}>
-          <Component {...pageProps} />
+          <Provider session={pageProps.session}>
+            <Component {...pageProps} />
+          </Provider>
         </Grid>
       </ThemeProvider>
     </>

@@ -1,8 +1,16 @@
+import axios from 'axios'
 
 const BASE_URL = 'https://findmeapitest.herokuapp.com';
 
-export const api = {
-  clients: `${BASE_URL}/clients`,
-  users: `${BASE_URL}/users`,
-  so: `${BASE_URL}/services_orders`
+const api = axios.create({
+  baseURL: BASE_URL
+})
+
+export default api
+
+export const endpoints = {
+  clients: '/clients',
+  users: '/users',
+  so: '/services_orders',
+  auth: '/sessions'
 }
