@@ -1,3 +1,5 @@
+import cookie from 'cookie'
+
 export const convertDate = (date: string): string => {
   const options = {
     day: '2-digit',
@@ -8,4 +10,8 @@ export const convertDate = (date: string): string => {
     second: 'numeric'
   }
   return new Intl.DateTimeFormat('pt-Br', options).format(new Date(date))
+}
+
+export function parseCookies(req) {
+  return cookie.parse(req ? req.headers.cookie || "" : document.cookie)
 }

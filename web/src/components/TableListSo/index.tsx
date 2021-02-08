@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface TableListSoProps {
   rows: Array<IServiceOrder>
+  token: string
 }
 
 const TableListSo: React.FC<TableListSoProps> = (props: TableListSoProps) => {
@@ -82,7 +83,9 @@ const TableListSo: React.FC<TableListSoProps> = (props: TableListSoProps) => {
             'Não',
             async function () {
               try {
-                await axios.delete(`${api.so}/${params.row.id}`)
+                await axios.delete(`${api.so}/${params.row.id}`, {
+                  headers: { Authorization: `Bearer ${props.token}` }
+                })
                 Notiflix.Notify.Success('Deletado com Sucesso!')
               } catch (error) {
                 Notiflix.Notify.Failure('Erro, tente novamente!')

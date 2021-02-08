@@ -13,6 +13,7 @@ import { convertDate } from '../../lib/functions'
 
 interface TableListClientProps {
   rows: Array<IClient>
+  token: string
 }
 
 const TableListClient: React.FC<TableListClientProps> = (
@@ -39,7 +40,9 @@ const TableListClient: React.FC<TableListClientProps> = (
             'Não',
             async function () {
               try {
-                await axios.delete(`${api.clients}/${params.row.id}`)
+                await axios.delete(`${api.clients}/${params.row.id}`, {
+                  headers: { Authorization: `Bearer ${props.token}` }
+                })
                 Notiflix.Notify.Success('Deletado com Sucesso!')
               } catch (error) {
                 Notiflix.Notify.Failure('Erro, tente novamente!')

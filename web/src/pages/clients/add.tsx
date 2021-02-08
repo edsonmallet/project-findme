@@ -15,6 +15,8 @@ import { api } from '../../lib/api'
 import Notiflix from 'notiflix'
 import Link from 'next/link'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import { GetServerSideProps } from 'next'
+import { PropsAuth } from '../../lib/interfaces'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,14 +36,20 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-const AddClient: React.FC = () => {
+const AddClient: React.FC<PropsAuth> = (props: PropsAuth) => {
   const classes = useStyles()
 
   const [name, setName] = useState<string>('')
 
   const handleSubmit = async () => {
     try {
-      await axios.post(api.clients, { name })
+      await axios.post(
+        api.clients,
+        { name },
+        {
+          headers: { Authorization: `Bearer ${props.token}` }
+        }
+      )
       setName('')
       Notiflix.Notify.Success('Cadastrado com Sucesso!')
     } catch (error) {
@@ -90,6 +98,16 @@ const AddClient: React.FC = () => {
       </Paper>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps<PropsAuth> = async ({
+  req
+}) => {
+  const token = req.headers.cookie
+    .split(';')
+    .find(c => c.trim().startsWith('token='))
+    .replace('token=', '')
+  return { props: { token } }
 }
 
 export default AddClient

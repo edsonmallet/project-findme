@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn, ManyToMany, ManyToOne } from 'typeorm'
 import { Client } from './Client';
 import { User } from './User';
 
@@ -13,14 +13,14 @@ export class ServiceOrder {
     @Column()
     public client_id: string;
 
-    @OneToOne(() => Client)
+    @ManyToOne(() => Client)
     @JoinColumn({ name: 'client_id' })
     public client: Client
 
     @Column()
     public user_id: string;
 
-    @OneToOne(() => User)
+    @ManyToOne(() => User)
     @JoinColumn({ name: 'user_id' })
     public user: User
 

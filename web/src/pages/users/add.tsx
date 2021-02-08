@@ -13,9 +13,10 @@ import {
 import axios from 'axios'
 import { api } from '../../lib/api'
 import Notiflix from 'notiflix'
-import { IUser } from '../../lib/interfaces'
+import { IUser, PropsAuth } from '../../lib/interfaces'
 import Link from 'next/link'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import { GetServerSideProps } from 'next'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,15 +38,21 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const initUser = { name: '', email: '', password: '' }
 
-const AddUser: React.FC = () => {
+const AddUser: React.FC<PropsAuth> = (props: PropsAuth) => {
   const classes = useStyles()
 
   const [formData, setFormData] = useState<IUser>(initUser)
-  const [validEmail, setValidEmail] = useState<Boolean>(false)
+  const [validEmail, setValidEmail] = useState<boolean>(false)
 
   const handleSubmit = async () => {
     try {
-      await axios.post(api.users, { ...formData })
+      await axios.post(
+        api.users,
+        { ...formData },
+        {
+          headers: { Authorization: `Bearer ${props.token}` }
+        }
+      )
       setFormData(initUser)
       Notiflix.Notify.Success('Cadastrado com Sucesso!')
     } catch (error) {
@@ -135,6 +142,16 @@ const AddUser: React.FC = () => {
       </Paper>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps<PropsAuth> = async ({
+  req
+}) => {
+  const token = req.headers.cookie
+    .split(';')
+    .find(c => c.trim().startsWith('token='))
+    .replace('token=', '')
+  return { props: { token } }
 }
 
 export default AddUser

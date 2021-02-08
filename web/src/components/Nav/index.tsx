@@ -9,8 +9,6 @@ import {
 } from '@material-ui/core'
 import MenuLinks from '../MenuLinks'
 import Link from 'next/link'
-
-import { signIn, signOut, useSession } from 'next-auth/client'
 import { AccountCircle, ExitToApp } from '@material-ui/icons'
 
 const useStyles = makeStyles({
@@ -33,7 +31,6 @@ const useStyles = makeStyles({
 
 const Nav: React.FC = () => {
   const classes = useStyles()
-  const [session] = useSession()
 
   return (
     <>
@@ -51,24 +48,13 @@ const Nav: React.FC = () => {
             <MenuLinks />
           </div>
           <div>
-            {!session && (
-              <Button
-                color="inherit"
-                onClick={() => signIn()}
-                className={classes.btnLogin}
-              >
-                <AccountCircle />
-              </Button>
-            )}
-            {session && (
-              <Button
-                color="inherit"
-                onClick={() => signOut()}
-                className={classes.btnLogin}
-              >
-                <ExitToApp />
-              </Button>
-            )}
+            <Button
+              color="inherit"
+              onClick={() => {}}
+              className={classes.btnLogin}
+            >
+              <AccountCircle />
+            </Button>
           </div>
         </Toolbar>
       </AppBar>

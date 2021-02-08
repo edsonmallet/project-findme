@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
-import { Provider } from 'next-auth/client'
 
 import GlobalStyles from '../styles/global'
 import { ThemeProvider } from 'styled-components'
@@ -10,6 +9,7 @@ import Nav from '../components/Nav'
 import { createStyles, Grid, makeStyles, Theme } from '@material-ui/core'
 import theme from '../styles/theme'
 import Notiflix from 'notiflix'
+import { CookiesProvider } from 'react-cookie'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -47,9 +47,9 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
         <GlobalStyles />
         <Nav />
         <Grid item xs={12} className={classes.grid}>
-          <Provider session={pageProps.session}>
+          <CookiesProvider>
             <Component {...pageProps} />
-          </Provider>
+          </CookiesProvider>
         </Grid>
       </ThemeProvider>
     </>

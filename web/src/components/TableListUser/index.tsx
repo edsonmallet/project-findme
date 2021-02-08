@@ -11,59 +11,62 @@ import { api } from '../../lib/api'
 import Notiflix from 'notiflix'
 import { convertDate } from '../../lib/functions'
 
-const columns: ColDef[] = [
-  { field: 'id', headerName: '#ID', flex: 2 },
-  { field: 'name', headerName: 'Nome', flex: 2 },
-  { field: 'email', headerName: 'Email', flex: 2 },
-  { field: 'created_at', headerName: 'Criado em', flex: 1 },
-  { field: 'updated_at', headerName: 'Ultimo Update', flex: 1 },
-  {
-    field: 'actions',
-    headerName: 'Ações',
-    flex: 1,
-    disableColumnMenu: true,
-    disableClickEventBubbling: true,
-    // eslint-disable-next-line react/display-name
-    renderCell: (params: CellParams) => {
-      const deleteUser = async () => {
-        Notiflix.Confirm.Show(
-          'Deletar Usuário?',
-          'Essa ação não tem volta!',
-          'Sim',
-          'Não',
-          async function () {
-            try {
-              await axios.delete(`${api.users}/${params.row.id}`)
-              Notiflix.Notify.Success('Deletado com Sucesso!')
-            } catch (error) {
-              Notiflix.Notify.Failure('Erro, tente novamente!')
-            }
-          }
-        )
-      }
-      return (
-        <>
-          <Button
-            onClick={deleteUser}
-            color="secondary"
-            variant="text"
-            size="small"
-          >
-            <DeleteForeverIcon />
-          </Button>
-        </>
-      )
-    }
-  }
-]
-
 interface TableListUserProps {
   rows: Array<IUser>
+  token: string
 }
 
 const TableListUser: React.FC<TableListUserProps> = (
   props: TableListUserProps
 ) => {
+  const columns: ColDef[] = [
+    { field: 'id', headerName: '#ID', flex: 2 },
+    { field: 'name', headerName: 'Nome', flex: 2 },
+    { field: 'email', headerName: 'Email', flex: 2 },
+    { field: 'created_at', headerName: 'Criado em', flex: 1 },
+    { field: 'updated_at', headerName: 'Ultimo Update', flex: 1 },
+    {
+      field: 'actions',
+      headerName: 'Ações',
+      flex: 1,
+      disableColumnMenu: true,
+      disableClickEventBubbling: true,
+      // eslint-disable-next-line react/display-name
+      renderCell: (params: CellParams) => {
+        const deleteUser = async () => {
+          Notiflix.Confirm.Show(
+            'Deletar Usuário?',
+            'Essa ação não tem volta!',
+            'Sim',
+            'Não',
+            async function () {
+              try {
+                await axios.delete(`${api.users}/${params.row.id}`, {
+                  headers: { Authorization: `Bearer ${props.token}` }
+                })
+                Notiflix.Notify.Success('Deletado com Sucesso!')
+              } catch (error) {
+                Notiflix.Notify.Failure('Erro, tente novamente!')
+              }
+            }
+          )
+        }
+        return (
+          <>
+            <Button
+              onClick={deleteUser}
+              color="secondary"
+              variant="text"
+              size="small"
+            >
+              <DeleteForeverIcon />
+            </Button>
+          </>
+        )
+      }
+    }
+  ]
+
   const rows = props.rows.map(item => ({
     id: item.id,
     name: item.name,

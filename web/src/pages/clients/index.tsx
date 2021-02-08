@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import {
   Typography,
@@ -8,15 +8,14 @@ import {
   Theme
 } from '@material-ui/core'
 
-import { IClient } from '../../lib/interfaces'
+import { IClient, PropsAuth } from '../../lib/interfaces'
 
 import AddIcon from '@material-ui/icons/Add'
 import TableListClient from '../../components/TableListClient'
-import { api, fetcher } from '../../lib/api'
-
-import useSwr from 'swr'
-import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import { api } from '../../lib/api'
+import { GetServerSideProps } from 'next'
 import Link from 'next/link'
+import axios from 'axios'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,17 +34,20 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-const Client: React.FC = ({
-  clients
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Client: React.FC<PropsAuth> = (props: PropsAuth) => {
   const classes = useStyles()
 
-  const { data, error } = useSwr<Array<IClient>>(api.clients, fetcher, {
-    initialData: clients
-  })
+  const [clients, setClients] = useState<Array<IClient>>([])
 
-  if (error) return <div>Failed to load users</div>
-  if (!data) return <div>Carregando...</div>
+  useEffect(() => {
+    async function getProps() {
+      const clients = await axios.get(api.clients, {
+        headers: { Authorization: `Bearer ${props.token}` }
+      })
+      setClients(clients.data)
+    }
+    getProps()
+  }, [])
 
   return (
     <div>
@@ -61,19 +63,25 @@ const Client: React.FC = ({
         </a>
       </Link>
 
-      {data.length === 0 && <Typography>Nenhum cliente cadastrado</Typography>}
-      {data.length > 0 && (
+      {clients.length === 0 && (
+        <Typography>Nenhum cliente cadastrado</Typography>
+      )}
+      {clients.length > 0 && (
         <div className={classes.table}>
-          <TableListClient rows={data} />
+          <TableListClient rows={clients} token={props.token} />
         </div>
       )}
     </div>
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-  const clients = await fetcher(api.clients)
-  return { props: { clients } }
+export const getServerSideProps: GetServerSideProps<PropsAuth> = async ({
+  req
+}) => {
+  const token = req.headers.cookie
+    .split(';')
+    .find(c => c.trim().startsWith('token='))
+    .replace('token=', '')
+  return { props: { token } }
 }
-
 export default Client

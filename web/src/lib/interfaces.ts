@@ -29,3 +29,12 @@ export interface IServiceOrder {
   latlng: ILatLng
   update_at?: string
 }
+
+export interface IAuth {
+  email: string
+  password: string
+}
+
+export interface PropsAuth {
+  token: string
+}
