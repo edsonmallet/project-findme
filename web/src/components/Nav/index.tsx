@@ -9,7 +9,8 @@ import {
 } from '@material-ui/core'
 import MenuLinks from '../MenuLinks'
 import Link from 'next/link'
-import { AccountCircle, ExitToApp } from '@material-ui/icons'
+import { AccountCircle } from '@material-ui/icons'
+import { logout } from '../../utils/auth'
 
 const useStyles = makeStyles({
   toolbar: {
@@ -50,7 +51,7 @@ const Nav: React.FC = () => {
           <div>
             <Button
               color="inherit"
-              onClick={() => {}}
+              onClick={() => logout()}
               className={classes.btnLogin}
             >
               <AccountCircle />

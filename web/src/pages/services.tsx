@@ -45,7 +45,7 @@ const ServicesOrders: React.FC<PropsAuth> = (props: PropsAuth) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async ({
+export const getServerSideProps: GetServerSideProps<PropsAuth> = async ({
   req
 }) => {
   const token = req.headers.cookie
